@@ -14,7 +14,7 @@
         const items = data.items;
 
         document.getElementById('app').innerHTML =
-          items.map(i => `<p>${i.name} - ¢${i.value}</p>`).join('');
+          items.map(i => `<p>${i.icon} ${i.name} - ¢${i.value}</p>`).join('');
       })
       .catch(err => {
         document.getElementById('app').innerHTML = "Error loading data";
