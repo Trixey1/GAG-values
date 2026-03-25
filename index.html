@@ -164,7 +164,7 @@ const BADGE={s:`<span class="tbadge fire">🔥 HOT</span>`,a:`<span class="tbadg
 // ═══════════════════════════════════════════════════
 async function loadData(){
   try {
-    const res = await fetch(DATA_URL);
+    const res = await fetch('items.json');    
     if(!res.ok) throw new Error("HTTP "+res.status);
     const json = await res.json();
     // Normalise keys: support both {name,category,value,icon} and {n,c,v,i}
