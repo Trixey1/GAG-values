@@ -2,24 +2,79 @@
 <html>
 <head>
   <title>GAG Values</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #f5f7f5;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #2a9e40;
+    }
+
+    .search {
+      padding: 10px;
+      width: 100%;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .item {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px;
+      margin-bottom: 8px;
+      background: white;
+      border-radius: 8px;
+      border: 1px solid #eee;
+    }
+
+    .value {
+      color: #2a9e40;
+      font-weight: bold;
+    }
+  </style>
 </head>
+
 <body>
-  <h1>GAG Values</h1>
-  <div id="app">Loading...</div>
 
-  <script>
-    fetch('items.json')
-      .then(res => res.json())
-      .then(data => {
-        const items = data.items;
+<h1>🌱 GAG Values</h1>
 
-        document.getElementById('app').innerHTML =
-          items.map(i => `<p>${i.icon} ${i.name} - ¢${i.value}</p>`).join('');
-      })
-      .catch(err => {
-        document.getElementById('app').innerHTML = "Error loading data";
-        console.error(err);
-      });
-  </script>
+<input class="search" id="search" placeholder="Search items...">
+
+<div id="list"></div>
+
+<script>
+let allItems = [];
+
+fetch('items.json')
+  .then(res => res.json())
+  .then(data => {
+    allItems = data.items;
+    render(allItems);
+  });
+
+function render(items) {
+  document.getElementById('list').innerHTML =
+    items.map(i => `
+      <div class="item">
+        <div>${i.icon} ${i.name}</div>
+        <div class="value">¢${i.value}</div>
+      </div>
+    `).join('');
+}
+
+document.getElementById('search').addEventListener('input', (e) => {
+  const q = e.target.value.toLowerCase();
+  const filtered = allItems.filter(i =>
+    i.name.toLowerCase().includes(q)
+  );
+  render(filtered);
+});
+</script>
+
 </body>
 </html>
